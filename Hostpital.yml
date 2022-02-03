@@ -23,9 +23,9 @@
         mac3 : "{{ mac | lower }}"
       when: mac2 is not defined  
 
-    - name: "Nexus: show ip arp | inc {{mac}}"
+    - name: "Nexus: show ip arp | inc {{mac3}}"
       cisco.nxos.nxos_command:
-        commands: show ip arp | inc {{mac}}
+        commands: show ip arp | inc {{mac3}}
       register: arp
 
     - name: Printing the arp output
