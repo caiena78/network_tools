@@ -4,17 +4,17 @@
   gather_facts: false      
   tasks:
     - name: Formatting the mac address
-      update_facts:
+      ansible.utils.update_fact:
         mac: "{{ mac | replace('.','') | replace(':','') | replace('-','') }}"
       when: mac | length > 4
 
     - name: Formatting the Mac address
-      update_facts:
+      ansible.utils.update_fact:
         mac: "{{ mac[0:4] }}.{{mac[4:8]}}.{{mac[8:12]}}"
       when: mac | length > 4
 
     - name: Convert Mac address to lowercase
-      update_facts:
+      ansible.utils.update_fact:
         mac: "{{ mac | lower }}"
 
     - name: "Nexus: show ip arp | inc {{mac}}"
