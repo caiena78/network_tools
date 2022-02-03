@@ -11,12 +11,14 @@
       when: mac | length > 4
 
     - name: Formatting the Mac address
+      ansible.utils.update_fact:
        updates:
         - path: mac
           value : "{{ mac[0:4] }}.{{mac[4:8]}}.{{mac[8:12]}}"
       when: mac | length > 4
 
     - name: Convert Mac address to lowercase
+      ansible.utils.update_fact:    
        updates:
         - path: mac
           value : "{{ mac | lower }}"
