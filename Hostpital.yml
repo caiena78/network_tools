@@ -1,0 +1,27 @@
+---
+- name: find ip address
+  hosts: nk1
+  gather_facts: false      
+  tasks:
+    - name: Setting facts so that they will be persisted in the fact cache
+      set_fact:
+        mactemp: "{{ mac | replace('.','') | replace(':','') | replace('-','') }}"
+      when: mac | length > 4
+
+
+    - name: Setting facts so that they will be persisted in the fact cache
+      set_fact:
+        mac: " {{ mactemp[0:4] }}.{{mactemp[4:8]}}.{{mactemp[8:12]}}"
+      when: mac | length > 4
+
+    - name: "Nexus: show ip arp | inc {{mac}}"
+      cisco.nxos.nxos_command:
+        commands: show ip arp | inc {{mac}}
+      register: arp
+      
+   
+
+
+    - name: Printing the arp output
+      debug:
+        msg: "{{ arp.stdout_lines[0] }}"
