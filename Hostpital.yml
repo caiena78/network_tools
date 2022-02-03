@@ -4,22 +4,24 @@
   gather_facts: false      
   tasks:
     - name: Formatting the mac address
-      set_fact:
-        mac: "{{ mac | replace('.','') | replace(':','') | replace('-','') }}"
-        cacheable: yes
+      ansible.utils.update_fact:
+        updates:
+        - path: mac
+          value : "{{ mac | replace('.','') | replace(':','') | replace('-','') }}"
       when: mac | length > 4
 
     - name: Formatting the Mac address
-      set_fact:
-        mac: "{{ mac[0:4] }}.{{mac[4:8]}}.{{mac[8:12]}}"
-        cacheable: yes        
+       updates:
+        - path: mac
+          value : "{{ mac[0:4] }}.{{mac[4:8]}}.{{mac[8:12]}}"
       when: mac | length > 4
 
     - name: Convert Mac address to lowercase
-      set_fact:
-        mac: "{{ mac | lower }}"
-        cacheable: yes
+       updates:
+        - path: mac
+          value : "{{ mac | lower }}"
         
+
     - name: "Nexus: show ip arp | inc {{mac}}"
       cisco.nxos.nxos_command:
         commands: show ip arp | inc {{mac}}
