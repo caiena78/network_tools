@@ -14,6 +14,10 @@
         mac: " {{ mactemp[0:4] }}.{{mactemp[4:8]}}.{{mactemp[8:12]}}"
       when: mac | length > 4
 
+    - name: Convert Mac address to lowercase
+      set_fact:
+        mac: "{{mac | lower }}"
+
     - name: "Nexus: show ip arp | inc {{mac}}"
       cisco.nxos.nxos_command:
         commands: show ip arp | inc {{mac}}
