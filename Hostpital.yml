@@ -9,7 +9,7 @@
       when: mac | length > 4
 
 
-    - name: Setting facts so that they will be persisted in the fact cache
+    - name: Formatting the Mac address
       set_fact:
         mac: " {{ mactemp[0:4] }}.{{mactemp[4:8]}}.{{mactemp[8:12]}}"
       when: mac | length > 4
@@ -18,9 +18,6 @@
       cisco.nxos.nxos_command:
         commands: show ip arp | inc {{mac}}
       register: arp
-      
-   
-
 
     - name: Printing the arp output
       debug:
