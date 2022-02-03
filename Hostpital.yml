@@ -3,16 +3,24 @@
   hosts: nk1
   gather_facts: false      
   tasks:
-    - name: Setting facts so that they will be persisted in the fact cache
+    - name: Formatting the mac address
       set_fact:
         mactemp: "{{ mac | replace('.','') | replace(':','') | replace('-','') }}"
       when: mac | length > 4
 
+    - name: show mac address
+      debug:
+        msg: "{{ mactemp }}"
 
     - name: Formatting the Mac address
       set_fact:
         mac: " {{ mactemp[0:4] }}.{{mactemp[4:8]}}.{{mactemp[8:12]}}"
       when: mac | length > 4
+
+    - name: show mac address
+      debug:
+        msg: "{{ mac }}"
+
 
     - name: Convert Mac address to lowercase
       set_fact:
