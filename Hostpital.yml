@@ -37,4 +37,4 @@
 
     - name: Printing the arp output
       debug:
-        msg: "{{ arp |  default('NOT FOUND') }}"
+        msg: "{{ arp.stdout[0] |  default('NOT FOUND') }}"
