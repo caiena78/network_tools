@@ -1,6 +1,6 @@
 ---
 - name: find ip address
-  hosts: cc1 
+  hosts: 901 
   gather_facts: false      
   tasks:
     - name: Formatting the mac address
