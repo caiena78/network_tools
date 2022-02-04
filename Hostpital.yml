@@ -31,10 +31,10 @@
 
     - name: update the arp data
       set_fact:    
-        arp : "{{ arpdata }}"
+        arp : "{{ arpdata.stdout[0] }}"
       when: arpdata is  defined     
     
 
     - name: Printing the arp output
       debug:
-        msg: "{{ arp.stdout[0] |  default('NOT FOUND') }}"
+        msg: "{{ arp |  default('NOT FOUND') }}"
