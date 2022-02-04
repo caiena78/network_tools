@@ -24,7 +24,7 @@
       when: mac2 is not defined  
 
     - name: "Cancer Center : show ip arp | inc {{mac3}}"
-      ccisco.ios.ios_command:
+      cisco.ios.ios_command:
         commands: show ip arp | inc {{mac3}}
       register: arpdata
       when: ansible_network_os == "ios"
