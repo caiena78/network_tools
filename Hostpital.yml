@@ -1,8 +1,6 @@
 ---
 - name: find ip address
-  hosts: all
-  vars:
-    arp: "Not Found"
+  hosts: all 
   gather_facts: false      
   tasks:
     - name: Formatting the mac address
@@ -45,4 +43,4 @@
 
     - name: Printing the arp output
       debug:
-        msg: "{{ arp }}"
+        msg: "{{ arp | default("Not Found")}}"
