@@ -2,7 +2,9 @@
 - name: find ip address
   hosts: all
   vars:
-    arp.stdout_lines[0]: "NOT FOUND"
+    arp: {
+      stdout_lines:["NOT FOUND"]
+    }
   gather_facts: false      
   tasks:
     - name: Formatting the mac address
