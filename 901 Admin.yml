@@ -1,0 +1,40 @@
+---
+- name: find ip address
+  hosts: 901 
+  gather_facts: false      
+  tasks:
+    - name: Formatting the mac address
+      set_fact:
+        mac1 : "{{ mac | replace('.','') | replace(':','') | replace('-','') }}"
+      when: mac | length > 4
+
+    - name: Formatting the Mac address
+      set_fact:
+        mac2 : "{{ mac1[0:4] }}.{{mac1[4:8]}}.{{mac1[8:12]}}"
+      when: mac | length > 4
+
+    - name: Convert Mac address to lowercase
+      set_fact:    
+        mac3 : "{{ mac2 | lower }}"
+      when: mac2 is defined   
+
+    - name: Convert Mac address to lowercase
+      set_fact:    
+        mac3 : "{{ mac | lower }}"
+      when: mac2 is not defined  
+
+    - name: "Cancer Center : show ip arp | inc {{mac3}}"
+      cisco.ios.ios_command:
+        commands: show ip arp | inc {{mac3}}
+      register: arpdata
+      when: ansible_network_os == "ios"
+
+    - name: update the arp data
+      set_fact:    
+        arp : "{{ arpdata.stdout[0] }}"
+      when: arpdata is  defined     
+    
+
+    - name: Printing the arp output
+      debug:
+        msg: "{{ arp |  default('NOT FOUND') }}"
