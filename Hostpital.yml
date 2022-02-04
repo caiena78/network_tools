@@ -2,9 +2,7 @@
 - name: find ip address
   hosts: all
   vars:
-    arp: {
-      stdout_lines:["NOT FOUND"]
-    }
+    arp: "Not Found"
   gather_facts: false      
   tasks:
     - name: Formatting the mac address
@@ -30,15 +28,21 @@
     - name: "Nexus: show ip arp | inc {{mac3}}"
       cisco.nxos.nxos_command:
         commands: show ip arp | inc {{mac3}}
-      register: arp
+      register: arpdata
       when: ansible_network_os == "nxos"
 
     - name: "{{hostvars['inventory_hostname']}} :show ip arp | inc {{mac3}}"
       cisco.ios.ios_command:
         commands: show ip arp | inc {{mac3}}
-      register: arp
+      register: arpdata
       when: ansible_network_os == "ios"
+
+    - name: update the arp data
+      set_fact:    
+        arp : "{{ arpdata.stdout_lines[0] }}"
+      when: arpdata is  defined     
+    
 
     - name: Printing the arp output
       debug:
-        msg: "{{ arp.stdout_lines[0] }}"
+        msg: "{{ arp }}"
