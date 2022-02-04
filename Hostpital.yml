@@ -39,7 +39,7 @@
 
     - name: update the arp data
       set_fact:    
-        arp : "{{ arpdata.stdout_lines[0] }}"
+        arp : "{{ arpdata }}"
       when: arpdata is  defined     
     
 
