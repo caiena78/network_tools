@@ -1,0 +1,21 @@
+---
+- name: Search for Mac address
+  hosts: networksw
+  gather_facts: no
+  tasks:
+   - name: Search For Mac
+     cisco.ios.ios_command: 
+      commands: show mac address-table | inc {{ mac }}
+     register: output
+   
+   - set_fact:
+       interface : "{{ output.stdout[0] |  regex_findall('Gi[0-9]{1,2}/0/[0-9]{1,2}') }}"
+   
+   - name: Show interface 
+     cisco.ios.ios_command: 
+      commands: 
+      - show int {{interface[0]}}      
+     register: output     
+  
+   - debug:
+        var: output   
