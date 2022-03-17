@@ -7,7 +7,12 @@
       cisco.ios.ios_command:
         commands: show run | include ^ip nat.+{{ipaddress}}
       register: output
-    
+
+    - name: Parse IP address
+      set_fact:    
+        NATIP : "{{ output.stdout[0] | regex_findall('[1-9]{1,3}\.[1-9]{1,3}\.[1-9]{1,3}\.[1-9]{1,3}') }}"
+               
+
     - name: Here is the NAT information
       debug:
-        msg: "{{output | default('NOT FOUND') }}"  
+        msg: "{{NATIP | default('NOT FOUND') }}"  
