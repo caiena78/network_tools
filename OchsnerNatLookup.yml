@@ -14,7 +14,7 @@
 
     - name: Filtering out the ip address
       set_fact:
-        ipaddresses: "{{ NATIP | split(',')}}"
+        ipaddresses: "{{ NATIP.split(',') }}"
 
 
     - name: Here is the NAT information
