@@ -12,13 +12,9 @@
       set_fact:    
         NATIP : "{{ output.stdout[0] | regex_findall('[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}') }}"
 
-    - name: Filtering out the ip address
-      set_fact:
-        ipaddresses: "{{ NATIP.split(',') }}"
-
-
+  
     - name: Here is the NAT information
       debug:
         msg: 
-          - "LOCAL IP: {{ ipaddresses[0] | default('NOT FOUND') }}"  
-          - "OCHSNER NAT: {{ ipaddresses[1] | default('NOT FOUND') }}"
+          - "LOCAL IP: {{ NATIP[0] | default('NOT FOUND') }}"  
+          - "OCHSNER NAT: {{ NATIP[1] | default('NOT FOUND') }}"
