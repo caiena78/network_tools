@@ -1,0 +1,15 @@
+---
+- name: find ip address
+  hosts: "WLCV9800" 
+  gather_facts: false      
+  tasks:
+    - name: "GETTING A LIST OF AP'S FROM THE CONTROLLER"
+      cisco.ios.ios_command:
+        commands: show ap tag summary | inc IT-SPARE01
+      register: apData    
+
+    
+
+    - name: Printing the arp output
+      debug:
+        msg: "{{ apData |  default('NOT FOUND') }}"
