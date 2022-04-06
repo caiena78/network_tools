@@ -12,4 +12,4 @@
 
     - name: Printing the arp output
       debug:
-        msg: "{{ apData |  default('NOT FOUND') }}"
+        msg: "{{ apName | regex_findall('AP[0-9a-f]{4}.[0-9a-f]{4}.[0-9a-f]{4}') }}"
