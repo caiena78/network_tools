@@ -1,6 +1,6 @@
 ---
 - name: find ip address
-  hosts: WLC9800 
+  hosts: WLCV9800 
   gather_facts: false      
   tasks:
     - name: "GETTING A LIST OF AP'S FROM THE CONTROLLER"
