@@ -9,7 +9,7 @@
       register: apData    
 
     - set_fact:
-        apName : "{{ apData |  regex_findall('AP[0-9A-Fa-f]{4}.[0-9A-Fa-f]{4}.[0-9A-Fa-f]{4}') }}"
+        apName : "{{ apData.stdout[0] |  regex_findall('AP[0-9A-Fa-f]{4}.[0-9A-Fa-f]{4}.[0-9A-Fa-f]{4}') }}"
 
     - name: Printing the arp output
       debug:
